@@ -11,9 +11,9 @@ package calculadoralogica;
  */
 public class Fila {
 
-    int inicio=0;
-    int fim=-1;
-    int qtd=0;
+    private int inicio=0;
+    private int fim=-1;
+    private int qtd=0;
 
     Fila (int capacidade, String[] item) throws Exception
     {
