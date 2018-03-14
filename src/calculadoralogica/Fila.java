@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package calculadoralogica;
 
-/**
- *
- * @author Calebe Carvalho
- */
 public class Fila {
 
     private int inicio=0;
@@ -17,7 +8,6 @@ public class Fila {
 
     Fila (int capacidade, String[] item) throws Exception
     {
-
         if(capacidade<=0)
             throw new Exception("Valor invalido");
 
@@ -27,7 +17,7 @@ public class Fila {
     void inserir(String elemento, String[] item) throws Exception
     {
         if(elemento==null)
-            throw new Exception("Insira umm valor");
+            throw new Exception("Insira um valor");
 
         if(qtd==item.length)
             throw new Exception("Fila cheia");
