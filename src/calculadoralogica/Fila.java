@@ -5,10 +5,6 @@
  */
 package calculadoralogica;
 
-/**
- *
- * @author Calebe Carvalho
- */
 public class Fila {
 
     private int inicio=0;

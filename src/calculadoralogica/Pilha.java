@@ -7,10 +7,6 @@ package calculadoralogica;
 
 import java.util.*;
 
-/**
- *
- * @author Calebe
- */
 public class Pilha {
     
     private int tamMax;
