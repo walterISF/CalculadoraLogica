@@ -5,7 +5,7 @@
  */
 package calculadoralogica;
 
-import static java.sql.DriverManager.println;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Validacao 
@@ -19,25 +19,53 @@ public class Validacao
     {
         StringTokenizer expQuebrada;
         String item = null;
+        Integer abraParenteses=0, fechaParenteses=0;
         if(exp != null && exp.length() > 0)
         {
-            String expWithoutSpace = exp.trim();
-            if(expWithoutSpace.indexOf("->") >= 0 || expWithoutSpace.indexOf("<->") >= 0)
+            String expWithoutSpace = exp.replace(" ", "");
+            expWithoutSpace = expWithoutSpace.replace("<->", "<");
+            expWithoutSpace = expWithoutSpace.replace("->", "-");
+            
+            expQuebrada = new StringTokenizer (expWithoutSpace, "~^v-<()", true);
+
+            while (expQuebrada.hasMoreElements()) 
             {
-                //TODO REMOVER ITENS DA STRING E COLOCAR NOVOS
+                item = expQuebrada.nextElement().toString();
+                System.out.println(item);                
+                switch(item.toLowerCase())
+                {
+                    case "(":
+                        abraParenteses++;
+                        break;
+                    case ")":
+                        fechaParenteses++;
+                        break;
+                    case "~":
+                        break;
+                    case "^":
+                        break;
+                    case "v":
+                        break;
+                    case "t":
+                        break;
+                    case "f":
+                        break;
+                    case "-":
+                        break;
+                    case "<":
+                        break;
+                    default:
+                        System.out.println("Invalid expression: " + item);
+                        return false;
+                        
+                }
+                
             }
             
-            expQuebrada = new StringTokenizer (expWithoutSpace, "~^v-<", true);
-
-            do
+            if((abraParenteses - fechaParenteses) == 0)
             {
-                item = expQuebrada.nextToken();
-
+                return true;
             }
-            while(expQuebrada.hasMoreTokens());
-                    
-         
-            
         }
         return false;
     }
