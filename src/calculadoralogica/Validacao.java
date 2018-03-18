@@ -10,6 +10,11 @@ import java.util.StringTokenizer;
 
 public class Validacao 
 {
+        //Possiveis tokens seguintes
+        private final String[] parentAProx = {"(","~","F","T"};
+        private final String[] parentFProx = {">","v","^","-",")"};
+        private final String[] expProx = {"v","^","<","-",")"};
+        private final String[] oprProx = {"T","F","~","("};
     
     public Validacao()
     {
@@ -17,56 +22,93 @@ public class Validacao
     
     public boolean validarExpressao(String exp)
     {
-        StringTokenizer expQuebrada;
-        String item = null;
         Integer abraParenteses=0, fechaParenteses=0;
+        
         if(exp != null && exp.length() > 0)
         {
             String expWithoutSpace = exp.replace(" ", "");
             expWithoutSpace = expWithoutSpace.replace("<->", "<");
             expWithoutSpace = expWithoutSpace.replace("->", "-");
             
-            expQuebrada = new StringTokenizer (expWithoutSpace, "~^v-<()", true);
-
-            while (expQuebrada.hasMoreElements()) 
+            String[] brokenExpression = expWithoutSpace.split("");
+            
+            for(int i=0; i< brokenExpression.length; i++)
             {
-                item = expQuebrada.nextElement().toString();
-                System.out.println(item);                
-                switch(item.toLowerCase())
+                System.out.println(brokenExpression[i]);
+                if(i+1 < brokenExpression.length)
                 {
-                    case "(":
-                        abraParenteses++;
-                        break;
-                    case ")":
+                    switch(brokenExpression[i])
+                    {
+                        case "(":
+                            if(expressionTest(brokenExpression[i+1], parentAProx))
+                            {
+                                abraParenteses++;
+                                break;
+                            }
+                            return false;
+                        case ")":
+                            if(expressionTest(brokenExpression[i+1], parentFProx))
+                            {
+                                fechaParenteses++;
+                                break;
+                            }
+                            return false;
+                        case "~":
+                            if(expressionTest(brokenExpression[i+1], oprProx))
+                                break;
+                            return false;
+                        case "^":
+                            if(expressionTest(brokenExpression[i+1], oprProx))
+                                break;
+                            return false;
+                        case "v":
+                            if(expressionTest(brokenExpression[i+1], oprProx))
+                                break;
+                            return false;
+                        case "T":
+                            if(expressionTest(brokenExpression[i+1], expProx))
+                                break;
+                            return false;
+                        case "F":
+                            if(expressionTest(brokenExpression[i+1], expProx))
+                                break;
+                            return false;
+                        case "-":
+                            if(expressionTest(brokenExpression[i+1], oprProx))
+                                break;
+                            return false;
+                        case "<":
+                            if(expressionTest(brokenExpression[i+1], oprProx))
+                                break;
+                            return false;
+                        default:
+                            System.out.println("Invalid expression in item: " + brokenExpression[i]);
+                            return false;
+
+                    }                    
+                }
+                else
+                {
+                    if(brokenExpression[i].equals(")"))
+                    {
                         fechaParenteses++;
-                        break;
-                    case "~":
-                        break;
-                    case "^":
-                        break;
-                    case "v":
-                        break;
-                    case "t":
-                        break;
-                    case "f":
-                        break;
-                    case "-":
-                        break;
-                    case "<":
-                        break;
-                    default:
-                        System.out.println("Invalid expression: " + item);
-                        return false;
-                        
+                        if((abraParenteses - fechaParenteses) == 0)
+                        {
+                            return true;
+                        }                        
+                    }
+                
                 }
                 
             }
             
-            if((abraParenteses - fechaParenteses) == 0)
-            {
-                return true;
-            }
         }
+        return false;
+    }
+    private boolean expressionTest(String x, String[] test)
+    {
+        if(Arrays.asList(test).contains(x))
+            return true;
         return false;
     }
 }
