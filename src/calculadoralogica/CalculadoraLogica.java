@@ -17,9 +17,6 @@ public class CalculadoraLogica {
      */
     public static void main(String[] args) throws Exception
     {
-        /**
-         * Tadeu, teste
-         */
         
         BufferedReader lerTeclado = new BufferedReader (new InputStreamReader (System.in)); //variavel que irá ler o que o usuario digitou e guardar
         
@@ -39,7 +36,6 @@ public class CalculadoraLogica {
         {
             System.out.println("Expressao Valida");
         }
-
     }
     
 }
