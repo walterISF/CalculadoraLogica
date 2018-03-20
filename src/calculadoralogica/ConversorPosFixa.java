@@ -6,22 +6,59 @@ import calculadoralogica.Pilha;
 
 public class ConversorPosFixa {
     
-    private String expressao;
+    private String[] expressao;
     private String[] partes;
-    Fila filaSaida;
-    Pilha pilhaOperadores;
+    Fila fila;
+    Pilha pilha;
         
-ConversorPosFixa(String expressao)
+ConversorPosFixa(String[] expressao) 
 {
  this.expressao = expressao;
 }
 
-public void Converte()
-{
-  
-
-}
+public void Converte() throws Exception
+{  
+    pilha = new Pilha(expressao.length, expressao);
+    fila = new Fila(expressao.length, expressao);
+   
+    for(int i=0; i<expressao.length;i++)
+    {
+        
+        if(expressao[i].equals("("))
+        {
+           pilha.adicionar(expressao[i]);
+        }
+        if(expressao[i].equals("T")||expressao[i].equals("F"))
+        {
+            fila.inserir(expressao[i]);
+        }
+        
+        switch(expressao[i]){
+        
+            case "~":
+                
+            case "^":
+                
+            case "v":
+                
+            case "-":
+            
+            case "<":
+            
+        
+        
+        }
     
+    
+    
+    
+    
+    
+    }
+    
+    
+     
+} 
 }
 
 
