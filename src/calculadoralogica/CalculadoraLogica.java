@@ -12,9 +12,17 @@ public class CalculadoraLogica {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        String exp = "((T ∨ F->T) ∧ (T->F))->(∼F<->T)";
+        String exp = "((T v F->T) ^ (T->F))->(~F<->T)";
+        
         Validacao validacao = new Validacao();
-        validacao.validarExpressao(exp);
+        if(validacao.validarExpressao(exp) == null)
+        {
+            System.out.println("Expressao Valida");
+        }
+        else
+        {
+            System.out.println("Expressao Invalida");
+        }
     }
     
 }
