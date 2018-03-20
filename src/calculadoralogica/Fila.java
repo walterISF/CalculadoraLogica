@@ -52,5 +52,12 @@ public class Fila {
         return null;
 
     }
-
+    
+    public Boolean vazia(){
+        return (fim == -1);
+    }
+    
+    public Boolean cheia(){
+        return (fim == qtd-1);
+    }
 }
