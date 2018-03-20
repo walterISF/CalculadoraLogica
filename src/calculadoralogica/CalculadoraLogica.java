@@ -8,18 +8,12 @@
 package calculadoralogica;
 
 import java.io.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
 
-/**
- *
- * @author vntwafi
- */
 public class CalculadoraLogica {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception
     {
@@ -34,7 +28,18 @@ public class CalculadoraLogica {
         
         System.out.print("Digite uma expressão lógica: ");
         vetorExpressao = lerTeclado.readLine();
+        Validacao validar = new Validacao();
+        String[] stringValidada = validar.validarExpressao(vetorExpressao);
         
+        if(stringValidada == null)
+        {
+            System.out.println("Expressao Invalida");
+        }
+        else
+        {
+            System.out.println("Expressao Valida");
+        }
+
     }
     
 }
