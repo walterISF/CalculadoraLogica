@@ -18,92 +18,104 @@ public class Validacao
     public Validacao()
     {
     }
-    
-    public String[] validarExpressao(String exp)
+    /**
+     * Metodo para validar expressao logica passada por string 
+     * @param exp String cuja seu valor é uma expressão lógica
+     * @return Retorna um Array de String se verdadeiro caso contrário será Null
+     * @throws java.lang.Exception Abre excessao caso string for invalida tanto sendo nula quanto vazia
+     */
+    public String[] validarExpressao(String exp) throws Exception
     {
         Integer abraParenteses=0, fechaParenteses=0;
         
-        if(exp != null && exp.length() > 0)
-        {
-            String expWithoutSpace = exp.replace(" ", "");
-            expWithoutSpace = expWithoutSpace.replace("<->", "<");
-            expWithoutSpace = expWithoutSpace.replace("->", "-");
-            
-            String[] brokenExpression = expWithoutSpace.split("");
-            
-            for(int i=0; i< brokenExpression.length; i++)
-            {
-                System.out.println(brokenExpression[i]);
-                if(i+1 < brokenExpression.length)
-                {
-                    switch(brokenExpression[i])
-                    {
-                        case "(":
-                            if(expressionTest(brokenExpression[i+1], parentAProx))
-                            {
-                                abraParenteses++;
-                                break;
-                            }
-                            return null;
-                        case ")":
-                            if(expressionTest(brokenExpression[i+1], parentFProx))
-                            {
-                                fechaParenteses++;
-                                break;
-                            }
-                            return null;
-                        case "~":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
-                                break;
-                            return null;
-                        case "^":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
-                                break;
-                            return null;
-                        case "v":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
-                                break;
-                            return null;
-                        case "T":
-                            if(expressionTest(brokenExpression[i+1], expProx))
-                                break;
-                            return null;
-                        case "F":
-                            if(expressionTest(brokenExpression[i+1], expProx))
-                                break;
-                            return null;
-                        case "-":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
-                                break;
-                            return null;
-                        case "<":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
-                                break;
-                            return null;
-                        default:
-                            System.out.println("Invalid expression in item: " + brokenExpression[i]);
-                            return null;
+        if(exp == null || exp.length() < 0)
+            throw new Exception("String nula");
 
-                    }                    
-                }
-                else
+        String expWithoutSpace = exp.replace(" ", "");
+        expWithoutSpace = expWithoutSpace.replace("<->", "<");
+        expWithoutSpace = expWithoutSpace.replace("->", "-");
+
+        String[] brokenExpression = expWithoutSpace.split("");
+
+        for(int i=0; i< brokenExpression.length; i++)
+        {
+            //System.out.println(brokenExpression[i]);
+            if(i+1 < brokenExpression.length)
+            {
+                switch(brokenExpression[i])
                 {
-                    if(brokenExpression[i].equals(")"))
-                    {
-                        fechaParenteses++;
-                        if((abraParenteses - fechaParenteses) == 0)
+                    case "(":
+                        if(expressionTest(brokenExpression[i+1], parentAProx))
                         {
-                            return brokenExpression;
-                        }                        
-                    }
-                
-                }
-                
+                            abraParenteses++;
+                            break;
+                        }
+                        return null;
+                    case ")":
+                        if(expressionTest(brokenExpression[i+1], parentFProx))
+                        {
+                            fechaParenteses++;
+                            break;
+                        }
+                        return null;
+                    case "~":
+                        if(expressionTest(brokenExpression[i+1], oprProx))
+                            break;
+                        return null;
+                    case "^":
+                        if(expressionTest(brokenExpression[i+1], oprProx))
+                            break;
+                        return null;
+                    case "v":
+                        if(expressionTest(brokenExpression[i+1], oprProx))
+                            break;
+                        return null;
+                    case "T":
+                        if(expressionTest(brokenExpression[i+1], expProx))
+                            break;
+                        return null;
+                    case "F":
+                        if(expressionTest(brokenExpression[i+1], expProx))
+                            break;
+                        return null;
+                    case "-":
+                        if(expressionTest(brokenExpression[i+1], oprProx))
+                            break;
+                        return null;
+                    case "<":
+                        if(expressionTest(brokenExpression[i+1], oprProx))
+                            break;
+                        return null;
+                    default:
+                        System.out.println("Invalid expression in item: " + brokenExpression[i]);
+                        return null;
+
+                }                    
             }
-            
+            else
+            {
+                if(brokenExpression[i].equals(")"))
+                {
+                    fechaParenteses++;
+                    if((abraParenteses - fechaParenteses) == 0)
+                    {
+                        return brokenExpression;
+                    }                        
+                }
+
+            }
+
         }
-        return null;
+
+        return brokenExpression;
     }
+    
+    /**
+     * Função para validar se String existe em Array préviamente passado
+     * @param x String de elemento a ser pesquisado
+     * @param test Array de elementos a serem testados
+     * @return Retorna true se String existe em Array e false caso contrário
+     */
     private boolean expressionTest(String x, String[] test)
     {
         if(Arrays.asList(test).contains(x))
