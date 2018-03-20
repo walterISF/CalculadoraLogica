@@ -6,7 +6,6 @@
 package calculadoralogica;
 
 import java.util.Arrays;
-import java.util.StringTokenizer;
 
 public class Validacao 
 {
@@ -20,7 +19,7 @@ public class Validacao
     {
     }
     
-    public boolean validarExpressao(String exp)
+    public String[] validarExpressao(String exp)
     {
         Integer abraParenteses=0, fechaParenteses=0;
         
@@ -45,45 +44,45 @@ public class Validacao
                                 abraParenteses++;
                                 break;
                             }
-                            return false;
+                            return null;
                         case ")":
                             if(expressionTest(brokenExpression[i+1], parentFProx))
                             {
                                 fechaParenteses++;
                                 break;
                             }
-                            return false;
+                            return null;
                         case "~":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return false;
+                            return null;
                         case "^":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return false;
+                            return null;
                         case "v":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return false;
+                            return null;
                         case "T":
                             if(expressionTest(brokenExpression[i+1], expProx))
                                 break;
-                            return false;
+                            return null;
                         case "F":
                             if(expressionTest(brokenExpression[i+1], expProx))
                                 break;
-                            return false;
+                            return null;
                         case "-":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return false;
+                            return null;
                         case "<":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return false;
+                            return null;
                         default:
                             System.out.println("Invalid expression in item: " + brokenExpression[i]);
-                            return false;
+                            return null;
 
                     }                    
                 }
@@ -94,7 +93,7 @@ public class Validacao
                         fechaParenteses++;
                         if((abraParenteses - fechaParenteses) == 0)
                         {
-                            return true;
+                            return brokenExpression;
                         }                        
                     }
                 
@@ -103,7 +102,7 @@ public class Validacao
             }
             
         }
-        return false;
+        return null;
     }
     private boolean expressionTest(String x, String[] test)
     {
