@@ -30,13 +30,12 @@ public void Converte() throws Exception
         }
         if(expressao[i].equals("T")||expressao[i].equals("F"))
         {
-            fila.inserir(expressao[i]);
+            fila.inserir(expressao[i], expressao);
         }
-        
         switch(expressao[i]){
         
             case "~":
-                
+                                
             case "^":
                 
             case "v":
