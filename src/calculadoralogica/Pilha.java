@@ -17,7 +17,7 @@ public class Pilha {
         pilha = new String[tamMax];
     }
     
-    public void adcionar(String elem, String[] pilha) throws Exception
+    public void adicionar(String elem, String[] pilha) throws Exception
     {   
         if(elem==null)
             throw new Exception("Insira um valor");

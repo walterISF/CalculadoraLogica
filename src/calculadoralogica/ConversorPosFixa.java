@@ -41,60 +41,60 @@ public void Converte() throws Exception
         int j = i;
         switch(expressao[i]){
         
-            case "(": pilha.adicionar(expressao[i]);
+            case "(": pilha.adicionar(expressao[i], expressao);
                       break;
                       
-            case "T": fila.inserir(expressao[i]);
+            case "T": fila.inserir(expressao[i], expressao);
                       break;
                       
-            case "F": fila.inserir(expressao[i]);
+            case "F": fila.inserir(expressao[i], expressao);
                       break;
                       
             case "~": if(pilha.acessar(x).equals("^") || pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString());
+                          fila.inserir(x.toString(), expressao);
                       } 
-                      pilha.adicionar(expressao[i]);
+                      pilha.adicionar(expressao[i], expressao);
                       break;
                                 
             case "^": if(pilha.acessar(x).equals("^") || pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString());
+                          fila.inserir(x.toString(), expressao);
                       }
-                      pilha.adicionar(expressao[i]);
+                      pilha.adicionar(expressao[i], expressao);
                       break;
                 
             case "v": if(pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString());
+                          fila.inserir(x.toString(), expressao);
                       }
-                      pilha.adicionar(expressao[i]);
+                      pilha.adicionar(expressao[i], expressao);
                       break;
                 
             case "-": if(pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString());
+                          fila.inserir(x.toString(), expressao);
                       }
-                      pilha.adicionar(expressao[i]);
+                      pilha.adicionar(expressao[i], expressao);
                       break;
             
             case "<": if(pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString());
+                          fila.inserir(x.toString(), expressao);
                       }
-                      pilha.adicionar(expressao[i]);
+                      pilha.adicionar(expressao[i], expressao);
                       break;
             case ")": if(expressao[i].equals(")"))
                       {
                           while(expressao[j] != "(")
                           {
                               pilha.retirar(x);
-                              fila.inserir(x.toString());
+                              fila.inserir(x.toString(), expressao);
                               j++;
                           }
                       }
