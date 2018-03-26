@@ -1,53 +1,53 @@
 package calculadoralogica;
 
-import java.util.*;
-
-public class Pilha {
+public class Pilha<E>{
     
-    private int tamMax;
-    private String[] pilha;
-    private int topo = 1;
+    private static final int tamPad = 10; //Pode ser alterado
+    private final int tam;
+    private int topo;
+    private E[] elem;
     
-    Pilha(int tam, String[] elem) throws Exception
+    public Pilha(int tam){
+        this.tam = tam > 0 ? tam : tamPad;
+        topo = -1;
+        elem = (E[])new Object[tam];
+    }
+    
+    public Pilha()
     {
-        if(tam <= 0)
-            throw new Exception("Valor invalido");
-        
-        tamMax = tam;
-        pilha = new String[tamMax];
+     this(tamPad);   
     }
     
-    public void adicionar(String elem, String[] pilha) throws Exception
-    {   
-        if(elem==null)
-            throw new Exception("Insira um valor");
-        
-        if(this.cheia()==true)
-          throw new Exception("Pilha Cheia");
-              
-        pilha[++topo] = elem;
-    }
-    
-    public String retirar(String[] pilha) throws Exception
+    public void adcionar(E e) throws Exception
     {
-        if(this.vazia()==true)
-            throw new Exception("Pilha Vazia");
-        
-        return pilha[topo--];
+    if(topo == tam - 1)
+        throw new Exception("Pilha cheia");
+    
+    elem[++topo] = e;
+    
     }
     
-    public String acessar(String[] pilha) throws Exception
+    public E retirar(E e) throws Exception
     {
-        if(this.vazia()==true)
-            throw new Exception("Pilha Vazia");
-        return pilha[topo];
+    if(topo == -1)
+        throw new Exception("Pilha vazia");   
+       
+    return elem[topo--];
     }
     
-    public Boolean vazia(){
+     public E acessar(E e) throws Exception
+    {
+    if(topo == -1)
+        throw new Exception("Pilha vazia");
+        
+        return elem[topo];
+    }
+    
+     public Boolean vazia(){
         return (topo == -1);
     }
     
     public Boolean cheia(){
-        return (topo == tamMax-1);
+        return (topo == tam-1);
     }
 }
