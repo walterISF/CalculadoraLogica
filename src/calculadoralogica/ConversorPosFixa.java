@@ -103,34 +103,7 @@ public void Converte() throws Exception
         }
     }
 }
-    public void Calcula() throws Exception
-    {
-      String verif = (String) fila.removerElemento();
-        
-       while(!fila.vazia())
-       {
-          if(verif.equals("F") || verif.equals("T"))
-              fila.inserir(verif);
-          
-          switch(verif.charAt(0)){
-              
-            case '~':
-                break;
-            case '^':
-                break;
-            case 'v':
-                break;
-            case '-':
-                break;
-            case '<': 
-                break;
-            case ')': 
-                break;
-          }
-       
-       }
-
-    }    
+    
 } 
 
 
