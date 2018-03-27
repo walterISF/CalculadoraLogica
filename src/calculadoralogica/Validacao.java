@@ -33,7 +33,7 @@ public class Validacao
             
             for(int i=0; i< brokenExpression.length; i++)
             {
-                System.out.println(brokenExpression[i]);
+                //System.out.println(brokenExpression[i]);
                 if(i+1 < brokenExpression.length)
                 {
                     switch(brokenExpression[i])

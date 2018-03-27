@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,7 +7,6 @@
 
 package calculadoralogica;
 
-import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,16 +25,21 @@ public class CalculadoraLogica {
         {
             System.out.println("expressao Invalida");
         }
-        ConversorPosFixa conversor = new ConversorPosFixa(expressao);
-        try 
+        else
         {
-            Fila filaDeSaida = new Fila();
-            filaDeSaida = conversor.Converte();
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(CalculadoraLogica.class.getName()).log(Level.SEVERE, null, ex);
+            ConversorPosFixa conversor = new ConversorPosFixa(expressao);
+            try 
+            {
+                Fila filaDeSaida = new Fila();
+                filaDeSaida = conversor.Converte();
+                System.out.println("OK");
+            } 
+            catch (Exception ex) 
+            {
+                Logger.getLogger(CalculadoraLogica.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
     
 }

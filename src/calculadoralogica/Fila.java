@@ -36,15 +36,25 @@ public class Fila <X>
         return (X)(item[inicio]);
     }
 
-    public void jogueForaUmItem () throws Exception
+    public X jogueForaUmItem () throws Exception
     {
+        X itemRemovido;
         if (qtd==0)
             throw new Exception ("Nada guardado");
-
+        
+        itemRemovido = (X)item[inicio];
         item[inicio] = null;
         inicio++;
         if (inicio==item.length)
             inicio = 0;
         qtd--;
+        return (X)itemRemovido;
+    }
+    public boolean filaVazia()
+    {
+        if(fim == -1)
+            return true;
+        
+        return false;
     }
 }
