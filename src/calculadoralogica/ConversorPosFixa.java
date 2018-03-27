@@ -20,10 +20,10 @@ ConversorPosFixa(String[] expressao)
  this.expressao = expressao;
 }
 
-public void Converte() throws Exception
+public Fila Converte() throws Exception
 {  
-    pilha = new Pilha(expressao.length, expressao);
-    fila = new Fila(expressao.length, expressao);
+    pilha = new Pilha();
+    fila = new Fila();
     x = new String[1];
    
     for(int i=0; i<expressao.length;i++)
@@ -41,60 +41,60 @@ public void Converte() throws Exception
         int j = i;
         switch(expressao[i]){
         
-            case "(": pilha.adicionar(expressao[i], expressao);
+            case "(": pilha.adcionar(expressao[i]);
                       break;
                       
-            case "T": fila.inserir(expressao[i], expressao);
+            case "T": fila.guarde(expressao[i]);
                       break;
                       
-            case "F": fila.inserir(expressao[i], expressao);
+            case "F": fila.guarde(expressao[i]);
                       break;
                       
             case "~": if(pilha.acessar(x).equals("^") || pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString(), expressao);
+                          fila.guarde(expressao[i]);
                       } 
-                      pilha.adicionar(expressao[i], expressao);
+                      pilha.adcionar(expressao[i]);
                       break;
                                 
             case "^": if(pilha.acessar(x).equals("^") || pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString(), expressao);
+                          fila.guarde(expressao[i]);
                       }
-                      pilha.adicionar(expressao[i], expressao);
+                      pilha.adcionar(expressao[i]);
                       break;
                 
             case "v": if(pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString(), expressao);
+                          fila.guarde(expressao[i]);
                       }
-                      pilha.adicionar(expressao[i], expressao);
+                      pilha.adcionar(expressao[i]);
                       break;
                 
             case "-": if(pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString(), expressao);
+                          fila.guarde(expressao[i]);
                       }
-                      pilha.adicionar(expressao[i], expressao);
+                      pilha.adcionar(expressao[i]);
                       break;
             
             case "<": if(pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
                       {
                           pilha.retirar(x);
-                          fila.inserir(x.toString(), expressao);
+                          fila.guarde(expressao[i]);
                       }
-                      pilha.adicionar(expressao[i], expressao);
+                      pilha.adcionar(expressao[i]);
                       break;
             case ")": if(expressao[i].equals(")"))
                       {
-                          while(expressao[j] != "(")
+                          while(expressao[j].equals("("))
                           {
                               pilha.retirar(x);
-                              fila.inserir(x.toString(), expressao);
+                              fila.guarde(expressao[i]);
                               j++;
                           }
                       }
@@ -102,6 +102,7 @@ public void Converte() throws Exception
             default: 
         }
     }
+    return fila;
 }
     
 } 

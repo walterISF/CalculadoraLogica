@@ -1,63 +1,50 @@
 package calculadoralogica;
 
-public class Fila {
+public class Fila <X>
+{
+    private Object[] item;
+    private int      inicio =  0;
+    private int      fim    = -1;
+    private int      qtd    =  0;
+    private int      capacidade = 40;
 
-    private int inicio=0;
-    private int fim=-1;
-    private int qtd=0;
-
-    Fila (int capacidade, String[] item) throws Exception
+    public Fila () throws Exception
     {
-        if(capacidade<=0)
-            throw new Exception("Valor invalido");
-
-        item = new String[capacidade];
+        item = new Object [capacidade];
     }
 
-    void inserir(String elemento, String[] item) throws Exception
+    public void guarde (X x) throws Exception
     {
-        if(elemento==null)
-            throw new Exception("Insira um valor");
+        if (x==null)
+            throw new Exception ("Falta o que guardar");
 
-        if(qtd==item.length)
-            throw new Exception("Fila cheia");
+        if (qtd==item.length)
+            throw new Exception ("Nao cabe mais nada");
 
         fim++;
-        if(fim==item.length)
-            fim=0;
-
-        item[fim] = elemento;
+        if (fim==item.length)
+            fim = 0;
+        item[fim] = x;
         qtd++;
-
     }
 
-    String retornarElemento()
+    public X getUmItem () throws Exception
     {
-        //return item[fim];
-        return null;
+        if (qtd==0)
+            throw new Exception ("Nada guardado");
+
+        return (X)(item[inicio]);
     }
 
-    String removerElemento(String[] item) throws Exception
+    public void jogueForaUmItem () throws Exception
     {
-        if(qtd==0)
-        throw new Exception("Fila vazia");
+        if (qtd==0)
+            throw new Exception ("Nada guardado");
 
-        item[fim] = null;
+        item[inicio] = null;
+        inicio++;
+        if (inicio==item.length)
+            inicio = 0;
         qtd--;
-
-        if(fim==item.length)
-            fim=0;
-        qtd--;
-        
-        return null;
-
-    }
-    
-    public Boolean vazia(){
-        return (fim == -1);
-    }
-    
-    public Boolean cheia(){
-        return (fim == qtd-1);
     }
 }

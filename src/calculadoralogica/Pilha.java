@@ -1,33 +1,26 @@
 package calculadoralogica;
 
-public class Pilha<E>{
+public class Pilha<X>
+{
     
-    private static final int tamPad = 10; //Pode ser alterado
-    private final int tam;
+    private final int tam = 30;
     private int topo;
-    private E[] elem;
+    private X[] elem;
     
-    public Pilha(int tam){
-        this.tam = tam > 0 ? tam : tamPad;
+    public Pilha() throws Exception{
         topo = -1;
-        elem = (E[])new Object[tam];
+        elem = (X[])new Object[tam];
     }
     
-    public Pilha()
+    public void adcionar(X e) throws Exception
     {
-     this(tamPad);   
+        if(topo == tam - 1)
+            throw new Exception("Pilha cheia");
+
+        elem[++topo] = e;
     }
     
-    public void adcionar(E e) throws Exception
-    {
-    if(topo == tam - 1)
-        throw new Exception("Pilha cheia");
-    
-    elem[++topo] = e;
-    
-    }
-    
-    public E retirar(E e) throws Exception
+    public X retirar(X e) throws Exception
     {
     if(topo == -1)
         throw new Exception("Pilha vazia");   
@@ -35,7 +28,7 @@ public class Pilha<E>{
     return elem[topo--];
     }
     
-     public E acessar(E e) throws Exception
+     public X acessar(X e) throws Exception
     {
     if(topo == -1)
         throw new Exception("Pilha vazia");
