@@ -1,41 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package calculadoralogica;
 
-import java.util.*;
-
-public class Pilha {
+public class Pilha<X>
+{
     
-    private int tamMax;
-    private String[] pilha;
+    private final int tam = 30;
     private int topo;
+    private X[] elem;
     
-    Pilha(int tam){
-        tamMax = tam;
-        pilha = new String[tamMax];
+    public Pilha() throws Exception{
         topo = -1;
+        elem = (X[])new Object[tam];
     }
     
-    public void adcionar(String elem){
-        pilha[++topo] = elem;
+    public void adcionar(X e) throws Exception
+    {
+        if(topo == tam - 1)
+            throw new Exception("Pilha cheia");
+
+        elem[++topo] = e;
     }
     
-    public String retirar(){
-        return pilha[topo--];
+    public X retirar(X e) throws Exception
+    {
+    if(topo == -1)
+        throw new Exception("Pilha vazia");   
+       
+    return elem[topo--];
     }
     
-    public String acessar(){
-        return pilha[topo];
+     public X acessar(X e) throws Exception
+    {
+    if(topo == -1)
+        throw new Exception("Pilha vazia");
+        
+        return elem[topo];
     }
     
-    public Boolean vazia(){
+     public Boolean vazia(){
         return (topo == -1);
     }
     
     public Boolean cheia(){
-        return (topo == tamMax -1);
+        return (topo == tam-1);
     }
 }
