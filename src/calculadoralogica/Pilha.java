@@ -28,7 +28,7 @@ public class Pilha<X>
     return elem[topo--];
     }
     
-     public X acessar(X e) throws Exception
+     public X acessar() throws Exception
     {
     if(topo == -1)
         throw new Exception("Pilha vazia");
