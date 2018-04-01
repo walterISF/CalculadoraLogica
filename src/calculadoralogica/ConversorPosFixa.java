@@ -88,9 +88,9 @@ public Fila Converte() throws Exception
                     break;
             
             case "<":
-                    if(!pilha.vazia() && !(pilha.getUmItem().equals("(") || pilha.getUmItem().equals(")"))) 
+                    if(!pilha.vazia() && (!pilha.getUmItem().equals("(") && !pilha.getUmItem().equals(")"))) 
                     {
-                        while(!pilha.vazia() && !(pilha.getUmItem().equals("(") || pilha.getUmItem().equals(")")))
+                        while(!pilha.vazia() && (!pilha.getUmItem().equals("(") && !pilha.getUmItem().equals(")")))
                         {
                             fila.guarde(pilha.getUmItem());
                             pilha.jogueForaUmItem();                           
