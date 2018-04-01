@@ -1,46 +1,91 @@
 package calculadoralogica;
 
-public class Pilha<X>
-{
-    
+public class Pilha <X>
+{ 
     private final int tam = 30;
-    private int topo;
-    private X[] elem;
+    private int       topo = -1;
+    private Object[]  item;
     
-    public Pilha() throws Exception{
-        topo = -1;
-        elem = (X[])new Object[tam];
+    public Pilha (int capacidade) throws Exception
+    {
+        if (capacidade<=0)
+            throw new Exception ("Capacidade invalida");
+        item = new Object [capacidade];
     }
     
-    public void adcionar(X e) throws Exception
+    /**
+     * Método responsável em inserir itens no topo da pilha
+     * @param e Recebe um objeto tipo genérico
+     * @throws Exception Em caso de excessão deve-se tratar no chamante
+     */
+    public void guarde (X e) throws Exception
     {
         if(topo == tam - 1)
             throw new Exception("Pilha cheia");
+        
+        topo++;
+        item[topo] = e;
+        
+    }
 
-        elem[++topo] = e;
-    }
-    
-    public X retirar(X e) throws Exception
-    {
-    if(topo == -1)
-        throw new Exception("Pilha vazia");   
-       
-    return elem[topo--];
-    }
-    
-     public X acessar() throws Exception
+    /**
+     * Método responsável em devolver o item que está no topo da pilha
+     * @return Retorna o item do topo da pilha
+     * @throws Exception Em caso de excessão deve-se tratar no chamante
+     */
+    public Object getUmItem () throws Exception
     {
     if(topo == -1)
         throw new Exception("Pilha vazia");
         
-        return elem[topo];
+        return item[topo];
     }
     
-     public Boolean vazia(){
-        return (topo == -1);
+    /**
+     * Método responsável em jogar fora o item que está no topo da pilha
+     * @throws Exception Em caso de excessão deve-se tratar no chamante
+     */
+    public void jogueForaUmItem () throws Exception
+    {
+        if(topo == -1)
+            throw new Exception("Pilha vazia");   
+
+        item[topo] = null;
+        topo --;
+        
     }
     
-    public Boolean cheia(){
-        return (topo == tam-1);
+    /**
+     * Método responsável em informar se a pilha está ou não vazia
+     * @return Retorna um boolean sendo true caso a pilha esteja vazia
+     * e false caso contrário
+     * @throws Exception Em caso de excessão deve-se tratar no chamante
+     */
+    public boolean vazia () throws Exception
+    {
+        if(tam <= 0)
+           throw new Exception("Capacidade invalida");
+        
+        if(topo == -1)
+            return true;
+        
+        return false;
+    }
+    
+    /**
+     * Método responsável em informar se a pilha está ou não cheia
+     * @return Retorna um boolean sendo true no caso da pilha estar cheia
+     * e false caso contrário
+     * @throws Exception Em caso de excessão deve-se tratar no chamante
+     */
+    public boolean cheia () throws Exception
+    {
+        if(topo == -1)
+            throw new Exception("Pilha vazia");
+        
+        if(topo == tam - 1)
+            return true;
+        
+        return false;
     }
 }

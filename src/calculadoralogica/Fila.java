@@ -6,13 +6,20 @@ public class Fila <X>
     private int      inicio =  0;
     private int      fim    = -1;
     private int      qtd    =  0;
-    private int      capacidade = 40;
 
-    public Fila () throws Exception
+    public Fila (int capacidade) throws Exception
     {
+        if (capacidade<=0)
+            throw new Exception ("Capacidade invalida");
+
         item = new Object [capacidade];
     }
 
+    /**
+     * Método responsável em inserir elementos na fila
+     * @param x Parametro do tipo generico
+     * @throws Exception No caso de excessão o chamante deve tratar
+     */
     public void guarde (X x) throws Exception
     {
         if (x==null)
@@ -28,6 +35,11 @@ public class Fila <X>
         qtd++;
     }
 
+    /**
+     * Método responsável em exibir o elemento no no início da fila
+     * @return Retorna um tipo genérico
+     * @throws Exception Em caso de excessão deve-se tratar no chamante
+     */
     public X getUmItem () throws Exception
     {
         if (qtd==0)
@@ -36,25 +48,20 @@ public class Fila <X>
         return (X)(item[inicio]);
     }
 
-    public X jogueForaUmItem () throws Exception
+    /**
+     * Método responsável em eliminar o primeiro item da fila 
+     * passando a mesma para o próximo
+     * @throws Exception Em caso de excessão deve-se tratar no chamante
+     */
+    public void jogueForaUmItem () throws Exception
     {
-        X itemRemovido;
         if (qtd==0)
             throw new Exception ("Nada guardado");
-        
-        itemRemovido = (X)item[inicio];
+
         item[inicio] = null;
         inicio++;
         if (inicio==item.length)
             inicio = 0;
         qtd--;
-        return (X)itemRemovido;
-    }
-    public boolean filaVazia()
-    {
-        if(fim == -1)
-            return true;
-        
-        return false;
     }
 }

@@ -1,103 +1,129 @@
 package calculadoralogica;
 
-import java.io.*;
-import calculadoralogica.Fila;
-import calculadoralogica.Pilha;
-
 public class ConversorPosFixa {
     
-    private String[] expressao;
-    private String[] partes;
-    private String[] x;
-    Fila fila;
-    Pilha pilha;
-    Fila filaResult;
-    Pilha pilhaResult;
+    private final String[]    expressao;
+    private final int         capacidade = 40;
+    private Fila              fila;
+    private Pilha             pilha;
     
     
 ConversorPosFixa(String[] expressao) 
 {
  this.expressao = expressao;
 }
-
+/**
+ * Metodo de conversão de uma expressão infixa para pósfixa
+ * @return Rtorna um elemento da classe fila
+ * @throws Exception a excessão deve ser tratada no chamante
+ */
 public Fila Converte() throws Exception
 {  
-    pilha = new Pilha();
-    fila = new Fila();
-    x = new String[1];
+    pilha = new Pilha(capacidade);
+    fila = new Fila(capacidade);
    
-    for(int i=0; i<expressao.length;i++)
+    for(int i=0; i<this.expressao.length;i++)
     {
-        
-        /*if(expressao[i].equals("("))
+        switch(this.expressao[i])
         {
-           pilha.adicionar(expressao[i], expressao);
-        }
-        if(expressao[i].equals("T")||expressao[i].equals("F"))
-        {
-            fila.inserir(expressao[i], expressao);
-        }*/
         
-        int j = i;
-        switch(expressao[i]){
-        
-            case "(": pilha.adcionar(expressao[i]);
+            case "(": pilha.guarde(this.expressao[i]);
                       break;
                       
-            case "T": fila.guarde(expressao[i]);
+            case "T": fila.guarde(this.expressao[i]);
                       break;
                       
-            case "F": fila.guarde(expressao[i]);
+            case "F": fila.guarde(this.expressao[i]);
                       break;
                       
-            case "~": if(pilha.acessar(x).equals("^") || pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
-                      {
-                          pilha.retirar(x);
-                          fila.guarde(expressao[i]);
-                      } 
-                      pilha.adcionar(expressao[i]);
+            case "~": pilha.guarde(this.expressao[i]);
                       break;
                                 
-            case "^": if(pilha.acessar(x).equals("^") || pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
-                      {
-                          pilha.retirar(x);
-                          fila.guarde(expressao[i]);
-                      }
-                      pilha.adcionar(expressao[i]);
-                      break;
+            case "^": 
+                    if(!pilha.vazia() && (pilha.getUmItem().equals("~") || pilha.getUmItem().equals("^")))
+                    {
+                        while(!pilha.vazia() && (pilha.getUmItem().equals("~") || pilha.getUmItem().equals("^")))
+                        {
+                            fila.guarde(pilha.getUmItem());
+                            pilha.jogueForaUmItem();
+                        }
+                        pilha.guarde(this.expressao[i]);
+                    }
+                    else
+                    {
+                        pilha.guarde(this.expressao[i]);
+                    }
+                    break;
+                    
+            case "v":
+                    if(!pilha.vazia() && (pilha.getUmItem().equals("~") || pilha.getUmItem().equals("^") || pilha.getUmItem().equals("v")))
+                    {
+                        while(!pilha.vazia() && (pilha.getUmItem().equals("~") || pilha.getUmItem().equals("^") || pilha.getUmItem().equals("v")))
+                        {
+                            fila.guarde(pilha.getUmItem());
+                            pilha.jogueForaUmItem();
+                        }
+                        pilha.guarde(this.expressao[i]);
+                    }
+                    else
+                    {
+                        pilha.guarde(this.expressao[i]);
+                    }
+                    break;
                 
-            case "v": if(pilha.acessar(x).equals("v") || pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
-                      {
-                          pilha.retirar(x);
-                          fila.guarde(expressao[i]);
-                      }
-                      pilha.adcionar(expressao[i]);
-                      break;
-                
-            case "-": if(pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
-                      {
-                          pilha.retirar(x);
-                          fila.guarde(expressao[i]);
-                      }
-                      pilha.adcionar(expressao[i]);
-                      break;
+            case "-": 
+                    if(!pilha.vazia() && (!pilha.getUmItem().equals("(") && !pilha.getUmItem().equals(")"))) 
+                    {
+                        while(!pilha.vazia() && (!pilha.getUmItem().equals("(") && !pilha.getUmItem().equals(")")))
+                        {
+                            fila.guarde(pilha.getUmItem());
+                            pilha.jogueForaUmItem();                           
+                        }
+                        pilha.guarde(this.expressao[i]);
+                    }
+                    else
+                    {
+                        pilha.guarde(this.expressao[i]);
+                    }
+                    break;
             
-            case "<": if(pilha.acessar(x).equals("-") || pilha.acessar(x).equals("<") || pilha.acessar(x).equals(")")) 
-                      {
-                          pilha.retirar(x);
-                          fila.guarde(expressao[i]);
-                      }
-                      pilha.adcionar(expressao[i]);
-                      break;
-            case ")": if(expressao[i].equals(")"))
-                      {
-                          while(expressao[j].equals("("))
-                          {
-                              pilha.retirar(x);
-                              fila.guarde(expressao[i]);
-                              j++;
-                          }
-                      }
+            case "<":
+                    if(!pilha.vazia() && !(pilha.getUmItem().equals("(") || pilha.getUmItem().equals(")"))) 
+                    {
+                        while(!pilha.vazia() && !(pilha.getUmItem().equals("(") || pilha.getUmItem().equals(")")))
+                        {
+                            fila.guarde(pilha.getUmItem());
+                            pilha.jogueForaUmItem();                           
+                        }
+                        pilha.guarde(this.expressao[i]);
+                    }
+                    else
+                    {
+                        pilha.guarde(this.expressao[i]);
+                    }
+                    break;                
+                    
+            case ")":
+                    if(!pilha.vazia() && !pilha.getUmItem().equals(")"))
+                    {
+                        while(!pilha.vazia() && !pilha.getUmItem().equals(")"))
+                        {
+                            if(pilha.getUmItem().equals("("))
+                            {
+                                pilha.jogueForaUmItem();
+                            }
+                            else
+                            {
+                                fila.guarde(pilha.getUmItem());
+                                pilha.jogueForaUmItem();                              
+                            }
+                            
+                        }
+                    }
+                    else
+                    {
+                        
+                    }
            
             default: 
         }

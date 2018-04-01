@@ -18,10 +18,16 @@ public class Validacao
     public Validacao()
     {
     }
-    
-    public String[] validarExpressao(String exp)
+    /**
+     * Método para validar uma expressão identificando pontos inadequados
+     * @param exp Expressão do tipo String para ser quebrada e validada
+     * @return Retorna um array de string String[] para o método chamante
+     * @throws Exception No caso de excessão deve-se tratar a mesma no método chamante
+     */
+    public String[] validarExpressao(String exp) throws Exception
     {
         Integer abraParenteses=0, fechaParenteses=0;
+        String[] brokenExpression;
         
         if(exp != null && exp.length() > 0)
         {
@@ -29,7 +35,7 @@ public class Validacao
             expWithoutSpace = expWithoutSpace.replace("<->", "<");
             expWithoutSpace = expWithoutSpace.replace("->", "-");
             
-            String[] brokenExpression = expWithoutSpace.split("");
+            brokenExpression = expWithoutSpace.split("");
             
             for(int i=0; i< brokenExpression.length; i++)
             {
@@ -44,45 +50,45 @@ public class Validacao
                                 abraParenteses++;
                                 break;
                             }
-                            return null;
+                            throw new Exception("Caractere invalido");
                         case ")":
                             if(expressionTest(brokenExpression[i+1], parentFProx))
                             {
                                 fechaParenteses++;
                                 break;
                             }
-                            return null;
+                            throw new Exception("Caractere invalido");
                         case "~":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return null;
+                            throw new Exception("Caractere invalido");
                         case "^":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return null;
+                            throw new Exception("Caractere invalido");
                         case "v":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return null;
+                            throw new Exception("Caractere invalido");
                         case "T":
                             if(expressionTest(brokenExpression[i+1], expProx))
                                 break;
-                            return null;
+                            throw new Exception("Caractere invalido");
                         case "F":
                             if(expressionTest(brokenExpression[i+1], expProx))
                                 break;
-                            return null;
+                            throw new Exception("Caractere invalido");
                         case "-":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return null;
+                            throw new Exception("Caractere invalido");
                         case "<":
                             if(expressionTest(brokenExpression[i+1], oprProx))
                                 break;
-                            return null;
+                            throw new Exception("Caractere invalido");
                         default:
                             System.out.println("Invalid expression in item: " + brokenExpression[i]);
-                            return null;
+                            throw new Exception("Caractere invalido");
 
                     }                    
                 }
@@ -102,7 +108,11 @@ public class Validacao
             }
             
         }
-        return null;
+        else
+        {
+            throw new Exception("Insira uma expressão válida");
+        }
+        return brokenExpression;
     }
     private boolean expressionTest(String x, String[] test)
     {
