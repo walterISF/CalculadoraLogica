@@ -23,23 +23,29 @@ public class Calculadora {
     private String[] listaDeOperadores = {"^", "-", "<", "~", "v"};
     private String[] valoresBooleanos = {"T" , "F"};
     private String[] x;
+    private int capacidade = 40;
     
     public Calculadora(Fila fila)
     {
         this.fila = fila;
     }
     
-    public boolean Calcular()
+    public String Calcular() throws Exception
     {
-        while(!fila.filaVazia())
+        try
         {
-            try 
+            pilha = new Pilha(capacidade);
+            
+            while(fila.vazia() == false)
             {
-                item = (String)fila.jogueForaUmItem();
+                item = (String)fila.getUmItem();
+                fila.jogueForaUmItem();
                 if(Arrays.asList(listaDeOperadores).contains(item))
                 {
                     op = item;
-                    String stBool = (String)fila.jogueForaUmItem();
+                    String stBool = (String)pilha.getUmItem();
+                    pilha.jogueForaUmItem();
+                    
                     if(stBool.equals("T"))
                     {
                         v2 = true;
@@ -48,14 +54,22 @@ public class Calculadora {
                     {
                         v2 = false;
                     }
-                    
+
                     if(op.equals("~"))
                     {
-                        pilha.adcionar(!v2);
+                        if(v2)
+                        {
+                            pilha.guarde("F");
+                        }
+                        else
+                        {
+                            pilha.guarde("T");
+                        }
                     }
                     else
                     {
-                        String stBoolCalc = (String)fila.jogueForaUmItem();
+                        String stBoolCalc = (String)pilha.getUmItem();
+                        pilha.jogueForaUmItem();
                         if(stBoolCalc.equals("T"))
                         {
                             v1 = true;
@@ -68,43 +82,45 @@ public class Calculadora {
                         {
                             case "^":
                                 if(v1 == v2 && v1 == true)
-                                    pilha.adcionar(v1);
+                                    pilha.guarde("T");
                                 else
-                                    pilha.adcionar(false);
+                                    pilha.guarde("F");
                                 break;
                             case "-":
                                 if(v1 != v2 && v1 == true)
-                                    pilha.adcionar(false);
+                                    pilha.guarde("F");
                                 else
-                                    pilha.adcionar(true);
+                                    pilha.guarde("T");
                                 break;
                             case "<":
                                 if(v1 == v2)
-                                    pilha.adcionar(true);
+                                    pilha.guarde("T");
                                 else
-                                    pilha.adcionar(false);
+                                    pilha.guarde("F");
                                 break;
                             case "v":
                                 if(v1 == true || v2 == true)
-                                    pilha.adcionar(true);
+                                    pilha.guarde("T");
                                 else
-                                    pilha.adcionar(false);
+                                    pilha.guarde("F");
                                 break;
                         }
                     }
                 }
                 else if(Arrays.asList(valoresBooleanos).contains(item))
                 {
-                        pilha.adcionar(item);
+                        pilha.guarde(item);
                 }
-            } 
-            catch (Exception ex) 
-            {
-                Logger.getLogger(Calculadora.class.getName()).log(Level.SEVERE, null, ex);
             }
+            return (String)pilha.getUmItem();
+        }
+        catch(Exception ex)
+        {
+            Logger.getLogger(Calculadora.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return false;
+        throw new Exception("impossivel calcular");
+
     }
     
 }

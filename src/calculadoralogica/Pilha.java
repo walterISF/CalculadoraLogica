@@ -88,4 +88,12 @@ public class Pilha <X>
         
         return false;
     }
+    
+    public boolean temUmElemento()
+    {
+        if(topo == 0)
+            return true;
+        
+        return false;
+    }
 }

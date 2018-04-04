@@ -64,4 +64,21 @@ public class Fila <X>
             inicio = 0;
         qtd--;
     }
+    public boolean cheia() throws Exception
+    {
+        if(qtd<0)
+            throw new Exception("impossivel obter resultado");
+        
+        if (qtd==item.length)
+            return true;
+        
+        return false;
+    }
+    public boolean vazia() throws Exception
+    {
+        if(qtd == 0)
+            return true;
+        
+        return false;
+    }
 }

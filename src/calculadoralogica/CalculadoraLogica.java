@@ -7,6 +7,7 @@
 
 package calculadoralogica;
 
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,26 +20,34 @@ public class CalculadoraLogica {
     public static void main(String[] args) {
         // TODO code application logic here
         String exp = "((T v F->T) ^ (T->F))->(~F<->T)";
+        exp = "T v F";
+        String[] expressao;
+        String resultado;
         Validacao validacao = new Validacao();
-        String[] expressao = validacao.validarExpressao(exp);
-        if(expressao == null)
+        ConversorPosFixa conversor;
+        Calculadora calculadora;
+        int capacidade = 50;
+        try
         {
-            System.out.println("expressao Invalida");
+            expressao = validacao.validarExpressao(exp);
+//            Scanner s = new Scanner(System.in);
+//            System.out.println("Digite uma expressão lógica: ");
+//            s.next();
+//            conversor = new ConversorPosFixa(expressao);
+//            conversor.Converte();
+            conversor = new ConversorPosFixa(expressao);
+            Fila filaDeSaida = new Fila(capacidade);
+            filaDeSaida = conversor.Converte();
+            calculadora = new Calculadora(filaDeSaida);
+            resultado = calculadora.Calcular();
+            System.out.println(resultado);
+
         }
-        else
+        catch(Exception e)
         {
-            ConversorPosFixa conversor = new ConversorPosFixa(expressao);
-            try 
-            {
-                Fila filaDeSaida = new Fila();
-                filaDeSaida = conversor.Converte();
-                System.out.println("OK");
-            } 
-            catch (Exception ex) 
-            {
-                Logger.getLogger(CalculadoraLogica.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Logger.getLogger(CalculadoraLogica.class.getName()).log(Level.SEVERE, null, e);
         }
+
 
     }
     
