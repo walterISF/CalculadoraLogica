@@ -88,7 +88,10 @@ public class Pilha <X>
         
         return false;
     }
-    
+    /**
+     * Método responsável por verificar se existe somente um elemento na pilha
+     * @return Retorna um boolean sendo true para o caso de ter e false se não tiver
+     */
     public boolean temUmElemento()
     {
         if(topo == 0)

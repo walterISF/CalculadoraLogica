@@ -24,19 +24,19 @@ public Fila Converte() throws Exception
    
     for(int i=0; i<this.expressao.length;i++)
     {
-        switch(this.expressao[i])
+        switch(this.expressao[i].toUpperCase())
         {
         
-            case "(": pilha.guarde(this.expressao[i]);
+            case "(": pilha.guarde(this.expressao[i].toUpperCase());
                       break;
                       
-            case "T": fila.guarde(this.expressao[i]);
+            case "T": fila.guarde(this.expressao[i].toUpperCase());
                       break;
                       
-            case "F": fila.guarde(this.expressao[i]);
+            case "F": fila.guarde(this.expressao[i].toUpperCase());
                       break;
                       
-            case "~": pilha.guarde(this.expressao[i]);
+            case "~": pilha.guarde(this.expressao[i].toUpperCase());
                       break;
                                 
             case "^": 
@@ -47,27 +47,27 @@ public Fila Converte() throws Exception
                             fila.guarde(pilha.getUmItem());
                             pilha.jogueForaUmItem();
                         }
-                        pilha.guarde(this.expressao[i]);
+                        pilha.guarde(this.expressao[i].toUpperCase());
                     }
                     else
                     {
-                        pilha.guarde(this.expressao[i]);
+                        pilha.guarde(this.expressao[i].toUpperCase());
                     }
                     break;
                     
-            case "v":
-                    if(!pilha.vazia() && (pilha.getUmItem().equals("~") || pilha.getUmItem().equals("^") || pilha.getUmItem().equals("v")))
+            case "V":
+                    if(!pilha.vazia() && (pilha.getUmItem().equals("~") || pilha.getUmItem().equals("^") || pilha.getUmItem().equals("V")))
                     {
-                        while(!pilha.vazia() && (pilha.getUmItem().equals("~") || pilha.getUmItem().equals("^") || pilha.getUmItem().equals("v")))
+                        while(!pilha.vazia() && (pilha.getUmItem().equals("~") || pilha.getUmItem().equals("^") || pilha.getUmItem().equals("V")))
                         {
                             fila.guarde(pilha.getUmItem());
                             pilha.jogueForaUmItem();
                         }
-                        pilha.guarde(this.expressao[i]);
+                        pilha.guarde(this.expressao[i].toUpperCase());
                     }
                     else
                     {
-                        pilha.guarde(this.expressao[i]);
+                        pilha.guarde(this.expressao[i].toUpperCase());
                     }
                     break;
                 
@@ -79,11 +79,11 @@ public Fila Converte() throws Exception
                             fila.guarde(pilha.getUmItem());
                             pilha.jogueForaUmItem();                           
                         }
-                        pilha.guarde(this.expressao[i]);
+                        pilha.guarde(this.expressao[i].toUpperCase());
                     }
                     else
                     {
-                        pilha.guarde(this.expressao[i]);
+                        pilha.guarde(this.expressao[i].toUpperCase());
                     }
                     break;
             
@@ -95,11 +95,11 @@ public Fila Converte() throws Exception
                             fila.guarde(pilha.getUmItem());
                             pilha.jogueForaUmItem();                           
                         }
-                        pilha.guarde(this.expressao[i]);
+                        pilha.guarde(this.expressao[i].toUpperCase());
                     }
                     else
                     {
-                        pilha.guarde(this.expressao[i]);
+                        pilha.guarde(this.expressao[i].toUpperCase());
                     }
                     break;                
                     
@@ -127,6 +127,14 @@ public Fila Converte() throws Exception
            
             default: 
         }
+    }
+    if(pilha.vazia())
+    {
+        return fila;
+    }
+    else
+    {
+        fila.guarde(this.pilha.getUmItem());
     }
     return fila;
 }

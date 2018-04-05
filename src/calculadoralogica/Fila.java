@@ -64,6 +64,11 @@ public class Fila <X>
             inicio = 0;
         qtd--;
     }
+    /**
+     * Metodo responsável em verificar se a fila esta cheia
+     * @return Retorna um boolean true caso a fila esteja cheia e false se ainda existe espaço
+     * @throws Exception Em caso de exceção o método chamante deve tratar
+     */
     public boolean cheia() throws Exception
     {
         if(qtd<0)
@@ -74,8 +79,17 @@ public class Fila <X>
         
         return false;
     }
+    
+    /**
+     * Metodo responsável por informar se a fila está vazia
+     * @return Retorna um boolean true caso a fila estiver vazia e false caso contrário
+     * @throws Exception Em caso de exceção o método chamante deve tratar
+     */
     public boolean vazia() throws Exception
     {
+        if(qtd<0)
+            throw new Exception("impossivel obter resultado");
+        
         if(qtd == 0)
             return true;
         

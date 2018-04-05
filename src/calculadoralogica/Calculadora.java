@@ -15,42 +15,46 @@ import java.util.logging.Logger;
  */
 public class Calculadora {
     
-    private Boolean v1, v2;
-    private String op;
-    private Fila fila;
-    private Pilha pilha;
-    private String item;
-    private String[] listaDeOperadores = {"^", "-", "<", "~", "v"};
-    private String[] valoresBooleanos = {"T" , "F"};
-    private String[] x;
-    private int capacidade = 40;
+    private Boolean         v1, v2;
+    private String          op;
+    private Fila            fila;
+    private Pilha           pilhaResultado;
+    private String          item, strItemPilha;
+    private final String[]  listaDeOperadores = {"^", "-", "<", "~", "V"};
+    private final String[]  valoresBooleanos = {"T" , "F"};
+    private String[]        x;
+    private final int       capacidade = 40;
     
     public Calculadora(Fila fila)
     {
         this.fila = fila;
     }
-    
+    /**
+     * Metodo responsável em calcular uma notacao posfixa
+     * @return Resultado do calculo da expressão
+     * @throws Exception No caso de Excessão o método chamante deve tratar
+     */
     public String Calcular() throws Exception
     {
         try
         {
-            pilha = new Pilha(capacidade);
+            pilhaResultado = new Pilha(capacidade);
             
-            while(fila.vazia() == false)
+            while(!fila.vazia())
             {
                 item = (String)fila.getUmItem();
-                fila.jogueForaUmItem();
+                
                 if(Arrays.asList(listaDeOperadores).contains(item))
                 {
                     op = item;
-                    String stBool = (String)pilha.getUmItem();
-                    pilha.jogueForaUmItem();
+                    strItemPilha = (String)pilhaResultado.getUmItem();
+                    pilhaResultado.jogueForaUmItem();
                     
-                    if(stBool.equals("T"))
+                    if(strItemPilha.equals("T"))
                     {
                         v2 = true;
                     }
-                    else
+                    else if(strItemPilha.equals("F"))
                     {
                         v2 = false;
                     }
@@ -59,18 +63,18 @@ public class Calculadora {
                     {
                         if(v2)
                         {
-                            pilha.guarde("F");
+                            pilhaResultado.guarde("F");
                         }
                         else
                         {
-                            pilha.guarde("T");
+                            pilhaResultado.guarde("T");
                         }
                     }
                     else
                     {
-                        String stBoolCalc = (String)pilha.getUmItem();
-                        pilha.jogueForaUmItem();
-                        if(stBoolCalc.equals("T"))
+                        String strItemPilhaCalc = (String)pilhaResultado.getUmItem();
+                        pilhaResultado.jogueForaUmItem();
+                        if(strItemPilhaCalc.equals("T"))
                         {
                             v1 = true;
                         }
@@ -82,37 +86,39 @@ public class Calculadora {
                         {
                             case "^":
                                 if(v1 == v2 && v1 == true)
-                                    pilha.guarde("T");
+                                    pilhaResultado.guarde("T");
                                 else
-                                    pilha.guarde("F");
+                                    pilhaResultado.guarde("F");
                                 break;
                             case "-":
                                 if(v1 != v2 && v1 == true)
-                                    pilha.guarde("F");
+                                    pilhaResultado.guarde("F");
                                 else
-                                    pilha.guarde("T");
+                                    pilhaResultado.guarde("T");
                                 break;
                             case "<":
                                 if(v1 == v2)
-                                    pilha.guarde("T");
+                                    pilhaResultado.guarde("T");
                                 else
-                                    pilha.guarde("F");
+                                    pilhaResultado.guarde("F");
                                 break;
-                            case "v":
+                            case "V":
                                 if(v1 == true || v2 == true)
-                                    pilha.guarde("T");
+                                    pilhaResultado.guarde("T");
                                 else
-                                    pilha.guarde("F");
+                                    pilhaResultado.guarde("F");
                                 break;
                         }
                     }
                 }
                 else if(Arrays.asList(valoresBooleanos).contains(item))
                 {
-                        pilha.guarde(item);
+                        pilhaResultado.guarde(item);
                 }
+                
+                fila.jogueForaUmItem();
             }
-            return (String)pilha.getUmItem();
+            return (String)pilhaResultado.getUmItem();
         }
         catch(Exception ex)
         {

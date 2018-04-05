@@ -7,7 +7,8 @@
 
 package calculadoralogica;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,8 +20,7 @@ public class CalculadoraLogica {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        String exp = "((T v F->T) ^ (T->F))->(~F<->T)";
-        exp = "T v F";
+        String exp;
         String[] expressao;
         String resultado;
         Validacao validacao = new Validacao();
@@ -29,12 +29,11 @@ public class CalculadoraLogica {
         int capacidade = 50;
         try
         {
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Digite uma expressão lógica: ");
+            exp = in.readLine();
             expressao = validacao.validarExpressao(exp);
-//            Scanner s = new Scanner(System.in);
-//            System.out.println("Digite uma expressão lógica: ");
-//            s.next();
-//            conversor = new ConversorPosFixa(expressao);
-//            conversor.Converte();
             conversor = new ConversorPosFixa(expressao);
             Fila filaDeSaida = new Fila(capacidade);
             filaDeSaida = conversor.Converte();

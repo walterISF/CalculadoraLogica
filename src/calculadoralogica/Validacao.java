@@ -11,8 +11,8 @@ public class Validacao
 {
         //Possiveis tokens seguintes
         private final String[] parentAProx = {"(","~","F","T"};
-        private final String[] parentFProx = {">","v","^","-",")"};
-        private final String[] expProx = {"v","^","<","-",")"};
+        private final String[] parentFProx = {">","V","^","-",")"};
+        private final String[] expProx = {"V","^","<","-",")"};
         private final String[] oprProx = {"T","F","~","("};
     
     public Validacao()
@@ -27,10 +27,24 @@ public class Validacao
     public String[] validarExpressao(String exp) throws Exception
     {
         Integer abraParenteses=0, fechaParenteses=0;
-        String[] brokenExpression;
+        String[] brokenExpression, brokenTestExpression;
         
         if(exp != null && exp.length() > 0)
         {
+            
+            brokenTestExpression = exp.split("");
+            for(int j=0; j< brokenTestExpression.length; j++)
+            {
+                if(brokenTestExpression[j].equals("-") && !brokenTestExpression[j+1].equals(">"))
+                {
+                    throw new Exception("Não existe o simbolo -");
+                }
+                else if(brokenTestExpression[j].equals(">") && !brokenTestExpression[j-1].equals("-"))
+                {
+                    throw new Exception("Não existe o simbolo >");
+                }
+            }
+            
             String expWithoutSpace = exp.replace(" ", "");
             expWithoutSpace = expWithoutSpace.replace("<->", "<");
             expWithoutSpace = expWithoutSpace.replace("->", "-");
@@ -42,53 +56,52 @@ public class Validacao
                 //System.out.println(brokenExpression[i]);
                 if(i+1 < brokenExpression.length)
                 {
-                    switch(brokenExpression[i])
+                    switch(brokenExpression[i].toUpperCase())
                     {
                         case "(":
-                            if(expressionTest(brokenExpression[i+1], parentAProx))
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), parentAProx))
                             {
                                 abraParenteses++;
                                 break;
                             }
-                            throw new Exception("Caractere invalido");
+                            throw new Exception("Erro de Expressão: Caractere invalido");
                         case ")":
-                            if(expressionTest(brokenExpression[i+1], parentFProx))
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), parentFProx))
                             {
                                 fechaParenteses++;
                                 break;
                             }
-                            throw new Exception("Caractere invalido");
+                            throw new Exception("Erro de Expressão: Parênteses colocados errados");
                         case "~":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), oprProx))
                                 break;
-                            throw new Exception("Caractere invalido");
+                            throw new Exception("Erro de Expressão: Operadores juntos(" + brokenExpression[i] + brokenExpression[i+1] + ")");
                         case "^":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), oprProx))
                                 break;
                             throw new Exception("Caractere invalido");
-                        case "v":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
+                        case "V":
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), oprProx))
                                 break;
                             throw new Exception("Caractere invalido");
                         case "T":
-                            if(expressionTest(brokenExpression[i+1], expProx))
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), expProx))
                                 break;
                             throw new Exception("Caractere invalido");
                         case "F":
-                            if(expressionTest(brokenExpression[i+1], expProx))
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), expProx))
                                 break;
                             throw new Exception("Caractere invalido");
                         case "-":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), oprProx))
                                 break;
                             throw new Exception("Caractere invalido");
                         case "<":
-                            if(expressionTest(brokenExpression[i+1], oprProx))
+                            if(expressionTest(brokenExpression[i+1].toUpperCase(), oprProx))
                                 break;
                             throw new Exception("Caractere invalido");
                         default:
-                            System.out.println("Invalid expression in item: " + brokenExpression[i]);
-                            throw new Exception("Caractere invalido");
+                            throw new Exception("Não existe o valor: " + brokenExpression[i]);
 
                     }                    
                 }
@@ -100,7 +113,14 @@ public class Validacao
                         if((abraParenteses - fechaParenteses) == 0)
                         {
                             return brokenExpression;
-                        }                        
+                        }
+                        else
+                        {
+                            if(abraParenteses>fechaParenteses)
+                                throw new Exception("Erro de Expressão: Parênteses Imcompletos (faltou '" + ")')");
+                            else
+                                throw new Exception("Erro de Expressão: Parênteses Imcompletos (faltou '" + "(')");
+                        }
                     }
                 
                 }
